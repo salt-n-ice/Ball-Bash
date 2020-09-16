@@ -11,7 +11,7 @@ var gameHeight = 500;
 var gameWidth = 1000;
 var boardLength = 130;
 var time =4;
-var vx=2.2*Math.log(time), vy=3;
+var vx=2.2*Math.log(time), vy=1.5*Math.log(time);
 var score=0;
 var name;
 var gameOver = 1;
@@ -113,6 +113,10 @@ function updateLevel()
   vx = 2.2*Math.log(time);
   else
   vx = -2.2*Math.log(time);
+  if(vy>0)
+  vy = 1.5*Math.log(time);
+  else
+  vy = -1.5*Math.log(time);
   time++;}
 }
 

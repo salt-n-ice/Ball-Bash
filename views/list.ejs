@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Ball Bash</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Warnes&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+
+   <div class="game-intro">
+     <h1 >Ball Bash</h1>
+     <form>
+       <input class="inputField" type="text" name="name" placeholder="Enter your name" autocomplete="off">
+       <button class="start" type="button" name="button">
+         <div class="tubelight">
+           <span>S</span>
+           <span>T</span>
+           <span>A</span>
+           <span>R</span>
+           <span>T</span>
+           <br>
+           <span>G</span>
+           <span>A</span>
+           <span>M</span>
+           <span>E</span>
+         </div>
+       </button>
+     </form>
+</div>
+   <p class="score"></p>
+    <div class="game">
+      <canvas class="glow" id="canvas-ball" style="width: 30px; height: 30px; border: 1px solid; border-radius: 50%" ></canvas>
+      <canvas class="glow" id="canvas-board" width="10" height="100"></canvas>
+      <canvas class="glow" id="canvas-player" width="10" height="100"></canvas>
+    </div>
+<div class="game-over">
+  <h1 class="over-heading">
+    GAME OVER
+  </h1>
+
+  </form>
+  <button class="start" type="button" name="button">
+    <div class="tubelight">
+      <span>P</span>
+      <span>L</span>
+      <span>A</span>
+      <span>Y</span>
+      <br>
+      <span>A</span>
+      <span>G</span>
+      <span>A</span>
+      <span>I</span>
+      <span>N</span>
+    </div>
+
+  </button>
+  <h2 class="score h2">Today's Leaderboard</h2>
+  <table class="leader-board">
+    <th>Name</th>
+    <th>Score</th>
+  </table>
+
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/game.js" charset="utf-8"></script>
+  </body>
+</html>

@@ -30,6 +30,9 @@ player.css("top",gameHeight/2+"px");
 var detachGameOver = $(".game-over").detach();
 var detachGame = game.detach();
 
+var uL;
+var uS;
+var frame;
 
 //the whole game
   start.click(initLock);
@@ -43,15 +46,23 @@ var detachGame = game.detach();
       alert("You will be playing Anonymously! xo")
       name = "Anonymous";
     }
+    $.post("/",{name: name});
+    $("game-intro").detach();
     $(".game-over").detach();
     $("body").append(detachGame);
+
+
+    uL = setInterval(updateLevel,2000);
+    uS = setInterval(updateScore,100);
+    frame = setInterval(frames, 1);
+
     //revert back variables
     score =0;
     gameOver = 0;
    //revert back styles
     canvas.css("left","20px");
 
-    $(".game-intro").remove();
+    $(".game-intro").detach();
     $("body").append(detachGame);
 
     document.body.requestPointerLock = document.body.requestPointerLock || document.body.requestPointerLock;
@@ -61,8 +72,6 @@ var detachGame = game.detach();
 }
 
 
-
-setInterval(frames, 1);
 function frames()
 {
   if(!gameOver)
@@ -80,19 +89,27 @@ function frames()
 
   if(absRight<=5)
   {
+    if(vx>0)
     vx*=-1;
     check();
   }
   else if(absLeft<=5)
   {
+    if(vx<0)
     vx*=-1;
     glowComputer();
   }
 
   if(ordBottom<=1)
-  vy*=-1;
+  {
+    if(vy>0)
+    vy*=-1;
+  }
   else if(ordTop<=1)
-  vy*=-1;
+  {
+    if(vy<0)
+    vy*=-1;
+  }
 
   absLeft = absLeft-(-vx);
   ordTop = ordTop -(-vy);
@@ -105,7 +122,7 @@ function frames()
 };
 
 //update level
-setInterval(updateLevel,2000)
+
 function updateLevel()
 {
   if(!gameOver)
@@ -121,12 +138,19 @@ function updateLevel()
 }
 
 //update score
-setInterval(updateScore,100)
+
 function updateScore()
 {
   if(!gameOver)
-  {score++;
-  $(".score").text("Your Score: "+ score);}
+  {
+    $.get("/updateScore",function(data){
+      if(data.success)
+      {
+        $(".score").text("Your Score: "+data.score);
+        score++;
+      }
+    })
+  }
 }
 
 document.addEventListener("mousemove", movePlayer);
@@ -177,15 +201,22 @@ function movePlayer(event)
       time = 4;
       vx = 2*Math.log(time);
       console.log("Game Over");
-      $.post("/",{name:name, score: score});
-      $.get("/array-api",function(data){
-        players = data.players;
-        leaderBoard.html("<th>Name</th> <th>Score</th>");
-        for(var i=0; i<players.length; i++)
+      $.post("/stopScoring",score);
+
+      $.get("/updateLeaderBoard",function(data){
+        if(data.success)
         {
-          leaderBoard.append("<tr><td>"+players[i].name+"</td> <td>"+players[i].score+"</td></tr>");
+          players = data.players;
+          leaderBoard.html("<th>Name</th> <th>Score</th>");
+          for(var i=0; i<players.length; i++)
+          {
+            leaderBoard.append("<tr><td>"+players[i].name+"</td> <td>"+players[i].score+"</td></tr>");
+          }
         }
       });
+      clearInterval(uL);
+      clearInterval(uS);
+      clearInterval(frame);
 
       //exit pointer lock and add the game over screen with the scoreboard and a button to play again
     }

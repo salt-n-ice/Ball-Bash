@@ -34,8 +34,8 @@
       <canvas class="glow" id="canvas-board" width="10" height="100"></canvas>
       <canvas class="glow" id="canvas-player" width="10" height="100"></canvas>
     </div>
-<div>
-  <h1 class="game-over over-heading">
+<div class="game-over">
+  <h1 class="over-heading">
     GAME OVER
   </h1>
 
@@ -55,6 +55,11 @@
     </div>
 
   </button>
+  <h2 class="score h2">Today's Leaderboard</h2>
+  <table class="leader-board">
+    <th>Name</th>
+    <th>Score</th>
+  </table>
 
 </div>
 
@@ -62,6 +67,6 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/game.js" charset="utf-8"></script>
+    <script src="/server.js" charset="utf-8"></script>
   </body>
 </html>

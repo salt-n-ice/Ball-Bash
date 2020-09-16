@@ -35,8 +35,7 @@ body {
   text-shadow:0px 0px 20px  #FF1493,
       0px 0px 30px  #FF1493,
       0px 0px 10px  #FF1493,
-      0px 0px 1px  #FF1493
-      ;
+      0px 0px 1px  #FF1493;
 }
 .tubelight span:nth-child(1){
   animation-delay:0s;

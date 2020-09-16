@@ -38,6 +38,7 @@ var frame;
   start.click(initLock);
   function initLock()
   {
+
     if(freshGame == 1)
     name = $(".inputField").val();
     freshGame = 0;
@@ -45,16 +46,15 @@ var frame;
     {
       alert("You will be playing Anonymously! xo")
       name = "Anonymous";
-    }
-    $.post("/",{name: name});
+    };
+    $.post("/",{Name: name});
+
     $("game-intro").detach();
     $(".game-over").detach();
     $("body").append(detachGame);
 
 
-    uL = setInterval(updateLevel,2000);
-    uS = setInterval(updateScore,100);
-    frame = setInterval(frames, 1);
+
 
     //revert back variables
     score =0;
@@ -71,7 +71,7 @@ var frame;
 
 }
 
-
+setInterval(frames, 1);
 function frames()
 {
   if(!gameOver)
@@ -122,7 +122,7 @@ function frames()
 };
 
 //update level
-
+setInterval(updateLevel,2000);
 function updateLevel()
 {
   if(!gameOver)
@@ -138,18 +138,20 @@ function updateLevel()
 }
 
 //update score
-
+setInterval(updateScore,100);
 function updateScore()
 {
   if(!gameOver)
   {
-    $.get("/updateScore",function(data){
-      if(data.success)
-      {
-        $("p.score").text("Your Score: "+data.score);
-        score++;
-      }
-    })
+    $("p.score").text("Your Score: "+score);
+    score++;
+    // $.get("/updateScore",function(data){
+    //   if(data.success)
+    //   {
+    //     $("p.score").text("Your Score: "+data.score);
+    //     score++;
+    //   }
+    // })
   }
 }
 
@@ -199,9 +201,10 @@ function movePlayer(event)
       $("body").append(detachGameOver);
       gameOver = 1;
       time = 4;
-      vx = 2*Math.log(time);
+      vx=2.2*Math.log(time),
+      vy=1.5*Math.log(time);
       console.log("Game Over");
-      $.post("/stopScoring",score);
+      $.post("/stopScoring",{score: score});
 
       $.get("/updateLeaderBoard",function(data){
         if(data.success)
@@ -214,9 +217,6 @@ function movePlayer(event)
           }
         }
       });
-      clearInterval(uL);
-      clearInterval(uS);
-      clearInterval(frame);
 
       //exit pointer lock and add the game over screen with the scoreboard and a button to play again
     }

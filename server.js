@@ -24,19 +24,16 @@ function compare(a,b){
 }
 var updateScore;
 app.post("/",function(req,res){
-  currentName = req.body.name;
-  updateScore = setInterval(updateScoreFunc,100);
-
+  currentName = req.body.Name;
+  console.log("requested");
+  // updateScore = setInterval(updateScoreFunc,100);
 });
-app.post("/stopScoring", function(){
+app.post("/stopScoring", function(req,res){
   clearInterval(updateScore);
   player.push({name: currentName, score: currentScore});
   player.sort(compare);
-  if(player.length < 6)
-  size = player.length;
-  else
+  if(player.length > 5)
   {
-    size = 5;
     player.pop();
   }
   currentScore = 0;

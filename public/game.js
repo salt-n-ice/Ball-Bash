@@ -146,7 +146,7 @@ function updateScore()
     $.get("/updateScore",function(data){
       if(data.success)
       {
-        $(".score").text("Your Score: "+data.score);
+        $("p.score").text("Your Score: "+data.score);
         score++;
       }
     })
